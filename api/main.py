@@ -3,11 +3,16 @@ import uvicorn
 import numpy as np
 from PIL import Image
 import io
+import os
 import tensorflow as tf
 
 app= FastAPI()
 
-MODEL=tf.keras.models.load_model(r"..\models\potatoes.keras")
+# MODEL=tf.keras.models.load_model(r"..\models\potatoes.keras")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "potatoes.keras")
+
+MODEL = tf.keras.models.load_model(MODEL_PATH)
 CLASS_NAMES=["Early Blight", "Late Blight", "Healthy"]
 
 def read_file_as_image(data)->np.ndarray:
