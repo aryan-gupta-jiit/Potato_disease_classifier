@@ -1,0 +1,16 @@
+# Ignore PlantVillage dataset directory
+PlantVillage/
+training/PlantVillage/
+
+# Ignore Jupyter checkpoint directories
+.ipynb_checkpoints/
+training/.ipynb_checkpoints/
+
+# Ignore large model files (adjust extensions as needed)
+*.h5
+*.keras
+*.zip
+
+# Ignore OS/editor files
+.DS_Store
+Thumbs.db
