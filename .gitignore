@@ -8,9 +8,12 @@ training/.ipynb_checkpoints/
 
 # Ignore large model files (adjust extensions as needed)
 *.h5
-*.keras
+# *.keras
 *.zip
 
 # Ignore OS/editor files
 .DS_Store
 Thumbs.db
+saved_models/
+
+api/main-tf-serving.py
