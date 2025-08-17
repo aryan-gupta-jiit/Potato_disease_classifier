@@ -167,3 +167,5 @@ If you encounter any issues or have questions, please:
 ---
 
 **Happy Potato Disease Detection! 🥔🔍**
+
+backend server -> https://potato-disease-classifier-ynoz.onrender.com/
