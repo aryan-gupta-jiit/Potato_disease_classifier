@@ -400,8 +400,18 @@ const uploadImage = async (uri: string) => {
       type: fileType,
     } as any); // Type assertion needed for React Native
 
+    // const response = await axios.post<Prediction>(
+    //   'http://192.168.1.38:8080/predict',
+    //   formData,
+    //   {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   }
+    // );
+
     const response = await axios.post<Prediction>(
-      'http://192.168.1.38:8080/predict',
+      'https://potato-disease-classifier-ynoz.onrender.com/predict',
       formData,
       {
         headers: {
