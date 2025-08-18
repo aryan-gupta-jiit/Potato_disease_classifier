@@ -5,8 +5,17 @@ from PIL import Image
 import io
 import os
 import tensorflow as tf
+from fastapi.middleware.cors import CORSMiddleware
 
 app= FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace "*" with specific origins like ["https://example.com"]
+    allow_credentials=True,
+    allow_methods=["*"],  # You can specify methods like ["GET", "POST"]
+    allow_headers=["*"],  # You can specify headers like ["Authorization", "Content-Type"]
+)
 
 # MODEL=tf.keras.models.load_model(r"..\models\potatoes.keras")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
