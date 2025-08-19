@@ -115,7 +115,7 @@ const Home = () => {
 
       try {
         const res = await axios.post(
-          `${import.meta.env.VITE_API_URL}`,
+          `${import.meta.env.VITE_API_URL_PREDICT}`,
           formData,
           { 
             headers: { "Content-Type": "multipart/form-data" },
@@ -146,8 +146,8 @@ const Home = () => {
     setTreatmentLoading(true);
     setOpenDialog(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}`, {
-        disease: result.class,
+      const res = await axios.post(`${import.meta.env.VITE_API_URL_TREATMENT}`, {
+        disease: data.class,
       });
       setAdvice(res.data.advice);
     } catch (err) {

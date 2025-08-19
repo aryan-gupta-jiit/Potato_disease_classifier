@@ -51,7 +51,7 @@ async def predict(
         "confidence": float(confidence),
     }
 
-@app.post("treatment")
+@app.post("/treatment")
 async def treatment(data:dict):
     disease=data.get("disease","unknown")
     if disease == "unknown":
