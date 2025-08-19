@@ -1,292 +1,3 @@
-// import { useState, useEffect } from "react";
-// import { makeStyles, withStyles } from "@material-ui/core/styles";
-// import AppBar from "@material-ui/core/AppBar";
-// import Toolbar from "@material-ui/core/Toolbar";
-// import Typography from "@material-ui/core/Typography";
-// import Avatar from "@material-ui/core/Avatar";
-// import Container from "@material-ui/core/Container";
-// import React from "react";
-// import Card from "@material-ui/core/Card";
-// import CardContent from "@material-ui/core/CardContent";
-// import { Paper, CardActionArea, CardMedia, Grid, TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Button, CircularProgress } from "@material-ui/core";
-// import cblogo from "./cblogo.PNG";
-// import image from "./bg.png";
-// import { DropzoneArea } from 'material-ui-dropzone';
-// import { common } from '@material-ui/core/colors';
-// import Clear from '@material-ui/icons/Clear';
-
-// const ColorButton = withStyles((theme) => ({
-//   root: {
-//     color: theme.palette.getContrastText(common.white),
-//     backgroundColor: common.white,
-//     '&:hover': {
-//       backgroundColor: '#ffffff7a',
-//     },
-//   },
-// }))(Button);
-// const axios = require("axios").default;
-
-// const useStyles = makeStyles((theme) => ({
-//   grow: {
-//     flexGrow: 1,
-//   },
-//   clearButton: {
-//     width: "-webkit-fill-available",
-//     borderRadius: "15px",
-//     padding: "15px 22px",
-//     color: "#000000a6",
-//     fontSize: "20px",
-//     fontWeight: 900,
-//   },
-//   root: {
-//     maxWidth: 345,
-//     flexGrow: 1,
-//   },
-//   media: {
-//     height: 400,
-//   },
-//   paper: {
-//     padding: theme.spacing(2),
-//     margin: 'auto',
-//     maxWidth: 500,
-//   },
-//   gridContainer: {
-//     justifyContent: "center",
-//     padding: "4em 1em 0 1em",
-//   },
-//   mainContainer: {
-//     backgroundImage: `url(${image})`,
-//     backgroundRepeat: 'no-repeat',
-//     backgroundPosition: 'center',
-//     backgroundSize: 'cover',
-//     height: "93vh",
-//     marginTop: "8px",
-//   },
-//   imageCard: {
-//     margin: "auto",
-//     maxWidth: 400,
-//     height: 500,
-//     backgroundColor: 'transparent',
-//     boxShadow: '0px 9px 70px 0px rgb(0 0 0 / 30%) !important',
-//     borderRadius: '15px',
-//   },
-//   imageCardEmpty: {
-//     height: 'auto',
-//   },
-//   noImage: {
-//     margin: "auto",
-//     width: 400,
-//     height: "400 !important",
-//   },
-//   input: {
-//     display: 'none',
-//   },
-//   uploadIcon: {
-//     background: 'white',
-//   },
-//   tableContainer: {
-//     backgroundColor: 'transparent !important',
-//     boxShadow: 'none !important',
-//   },
-//   table: {
-//     backgroundColor: 'transparent !important',
-//   },
-//   tableHead: {
-//     backgroundColor: 'transparent !important',
-//   },
-//   tableRow: {
-//     backgroundColor: 'transparent !important',
-//   },
-//   tableCell: {
-//     fontSize: '22px',
-//     backgroundColor: 'transparent !important',
-//     borderColor: 'transparent !important',
-//     color: '#000000a6 !important',
-//     fontWeight: 'bolder',
-//     padding: '1px 24px 1px 16px',
-//   },
-//   tableCell1: {
-//     fontSize: '14px',
-//     backgroundColor: 'transparent !important',
-//     borderColor: 'transparent !important',
-//     color: '#000000a6 !important',
-//     fontWeight: 'bolder',
-//     padding: '1px 24px 1px 16px',
-//   },
-//   tableBody: {
-//     backgroundColor: 'transparent !important',
-//   },
-//   text: {
-//     color: 'white !important',
-//     textAlign: 'center',
-//   },
-//   buttonGrid: {
-//     maxWidth: "416px",
-//     width: "100%",
-//   },
-//   detail: {
-//     backgroundColor: 'white',
-//     display: 'flex',
-//     justifyContent: 'center',
-//     flexDirection: 'column',
-//     alignItems: 'center',
-//   },
-//   appbar: {
-//     background: '#be6a77',
-//     boxShadow: 'none',
-//     color: 'white'
-//   },
-//   loader: {
-//     color: '#be6a77 !important',
-//   }
-// }));
-
-// const Home = () => {
-//     const classes = useStyles();
-//   const [selectedFile, setSelectedFile] = useState();
-//   const [preview, setPreview] = useState();
-//   const [data, setData] = useState();
-//   const [image, setImage] = useState(false);
-//   const [isLoading, setIsloading] = useState(false);
-//   let confidence = 0;
-
-//   const sendFile = async () => {
-//     if (image) {
-//       let formData = new FormData();
-//       formData.append("file", selectedFile);
-//       let res = await axios({
-//         method: "post",
-//         url: process.env.REACT_APP_API_URL,
-//         data: formData,
-//       });
-//       if (res.status === 200) {
-//         setData(res.data);
-//       }
-//       setIsloading(false);
-//     }
-//   }
-
-//   const clearData = () => {
-//     setData(null);
-//     setImage(false);
-//     setSelectedFile(null);
-//     setPreview(null);
-//   };
-
-//   useEffect(() => {
-//     if (!selectedFile) {
-//       setPreview(undefined);
-//       return;
-//     }
-//     const objectUrl = URL.createObjectURL(selectedFile);
-//     setPreview(objectUrl);
-//   }, [selectedFile]);
-
-//   useEffect(() => {
-//     if (!preview) {
-//       return;
-//     }
-//     setIsloading(true);
-//     sendFile();
-//   }, [preview]);
-
-//   const onSelectFile = (files) => {
-//     if (!files || files.length === 0) {
-//       setSelectedFile(undefined);
-//       setImage(false);
-//       setData(undefined);
-//       return;
-//     }
-//     setSelectedFile(files[0]);
-//     setData(undefined);
-//     setImage(true);
-//   };
-
-//   if (data) {
-//     confidence = (parseFloat(data.confidence) * 100).toFixed(2);
-//   }
-
-//   return (
-//     <React.Fragment>
-//       <AppBar position="static" className={classes.appbar}>
-//         <Toolbar>
-//           <Typography className={classes.title} variant="h6" noWrap>
-//             CodeBasics: Potato Disease Classification
-//           </Typography>
-//           <div className={classes.grow} />
-//           <Avatar src={cblogo}></Avatar>
-//         </Toolbar>
-//       </AppBar>
-//       <Container maxWidth={false} className={classes.mainContainer} disableGutters={true}>
-//         <Grid
-//           className={classes.gridContainer}
-//           container
-//           direction="row"
-//           justifyContent="center"
-//           alignItems="center"
-//           spacing={2}
-//         >
-//           <Grid item xs={12}>
-//             <Card className={`${classes.imageCard} ${!image ? classes.imageCardEmpty : ''}`}>
-//               {image && <CardActionArea>
-//                 <CardMedia
-//                   className={classes.media}
-//                   image={preview}
-//                   component="image"
-//                   title="Contemplative Reptile"
-//                 />
-//               </CardActionArea>
-//               }
-//               {!image && <CardContent className={classes.content}>
-//                 <DropzoneArea
-//                   acceptedFiles={['image/*']}
-//                   dropzoneText={"Drag and drop an image of a potato plant leaf to process"}
-//                   onChange={onSelectFile}
-//                 />
-//               </CardContent>}
-//               {data && <CardContent className={classes.detail}>
-//                 <TableContainer component={Paper} className={classes.tableContainer}>
-//                   <Table className={classes.table} size="small" aria-label="simple table">
-//                     <TableHead className={classes.tableHead}>
-//                       <TableRow className={classes.tableRow}>
-//                         <TableCell className={classes.tableCell1}>Label:</TableCell>
-//                         <TableCell align="right" className={classes.tableCell1}>Confidence:</TableCell>
-//                       </TableRow>
-//                     </TableHead>
-//                     <TableBody className={classes.tableBody}>
-//                       <TableRow className={classes.tableRow}>
-//                         <TableCell component="th" scope="row" className={classes.tableCell}>
-//                           {data.class}
-//                         </TableCell>
-//                         <TableCell align="right" className={classes.tableCell}>{confidence}%</TableCell>
-//                       </TableRow>
-//                     </TableBody>
-//                   </Table>
-//                 </TableContainer>
-//               </CardContent>}
-//               {isLoading && <CardContent className={classes.detail}>
-//                 <CircularProgress color="secondary" className={classes.loader} />
-//                 <Typography className={classes.title} variant="h6" noWrap>
-//                   Processing
-//                 </Typography>
-//               </CardContent>}
-//             </Card>
-//           </Grid>
-//           {data &&
-//             <Grid item className={classes.buttonGrid} >
-
-//               <ColorButton variant="contained" className={classes.clearButton} color="primary" component="span" size="large" onClick={clearData} startIcon={<Clear fontSize="large" />}>
-//                 Clear
-//               </ColorButton>
-//             </Grid>}
-//         </Grid >
-//       </Container >
-//     </React.Fragment >
-//   )
-// }
-
-// export default Home
-
 import React, { useState, useEffect } from "react";
 import {
   AppBar,
@@ -308,24 +19,67 @@ import {
   TableCell,
   Button,
   CircularProgress,
+  Box,
+  LinearProgress,
+  Chip,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from "@mui/material";
-
 import { styled } from "@mui/material/styles";
-import Clear from "@mui/icons-material/Clear";
-// import { DropzoneArea } from "material-ui-dropzone";
+import { Clear, CloudUpload, Info, Home as HomeIcon,LocalHospital } from "@mui/icons-material";
 import { DropzoneArea } from "mui-file-dropzone";
-// npm install react-dropzone
-// import { useDropzone } from "react-dropzone";
 import cblogo from "./cblogo.PNG";
-import image from "./bg.png";
+import bgImage from "./bg.png";
 import axios from "axios";
 
-// Styled button that uses theme
-const ColorButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
-  color: theme.palette.text.primary,
+// Custom styled components
+const GradientAppBar = styled(AppBar)(({ theme }) => ({
+  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+  boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+}));
+
+const GlassCard = styled(Card)(({ theme }) => ({
+  background: "rgba(255, 255, 255, 0.85)",
+  backdropFilter: "blur(10px)",
+  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+  borderRadius: "20px",
+  border: "1px solid rgba(255, 255, 255, 0.2)",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
   "&:hover": {
-    backgroundColor: "#ffffff7a",
+    transform: "translateY(-5px)",
+    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.25)",
+  },
+}));
+
+const PrimaryButton = styled(Button)(({ theme }) => ({
+  background: `linear-gradient(45deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+  color: "white",
+  fontWeight: "bold",
+  padding: "12px 24px",
+  borderRadius: "50px",
+  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+  transition: "all 0.3s ease",
+  "&:hover": {
+    transform: "translateY(-2px)",
+    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
+  },
+}));
+
+const SecondaryButton = styled(Button)(({ theme }) => ({
+  background: "rgba(255, 255, 255, 0.9)",
+  color: theme.palette.text.primary,
+  fontWeight: "bold",
+  padding: "12px 24px",
+  borderRadius: "50px",
+  border: "1px solid rgba(0, 0, 0, 0.1)",
+  transition: "all 0.3s ease",
+  "&:hover": {
+    background: "rgba(255, 255, 255, 1)",
+    transform: "translateY(-2px)",
+    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
   },
 }));
 
@@ -333,41 +87,87 @@ const Home = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [data, setData] = useState();
+  const [advice, setAdvice] = useState("");
   const [imageFile, setImageFile] = useState(false);
   const [isLoading, setIsloading] = useState(false);
-  let confidence = 0;
+  const [progress, setProgress] = useState(0);
+  const [treatmentLoading, setTreatmentLoading] = useState(false);
+  const [openDialog,setOpenDialog] = useState(false);
+
 
   const sendFile = async () => {
-  if (imageFile) {
-    setIsloading(true); // optional, but ensures loading starts
+    if (imageFile) {
+      setIsloading(true);
+      setProgress(0);
+      
+      const timer = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress === 100) {
+            return 100;
+          }
+          const diff = Math.random() * 10;
+          return Math.min(oldProgress + diff, 95);
+        });
+      }, 500);
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}`, // ✅ Vite way
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}`,
+          formData,
+          { 
+            headers: { "Content-Type": "multipart/form-data" },
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setProgress(percentCompleted);
+            }
+          }
+        );
 
-      if (res.status === 200) {
-        setData(res.data);
+        if (res.status === 200) {
+          setData(res.data);
+          setProgress(100);
+        }
+      } catch (err) {
+        console.error("Upload failed:", err);
+      } finally {
+        clearInterval(timer);
+        setTimeout(() => setIsloading(false), 500);
       }
-    } catch (err) {
-      console.error("Upload failed:", err);
-    } finally {
-      setIsloading(false);
     }
-  }
-};
+  };
 
+  const handleTreatment = async () => {
+    if (!data) return;
+    setTreatmentLoading(true);
+    setOpenDialog(true);
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}`, {
+        disease: result.class,
+      });
+      setAdvice(res.data.advice);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setTreatmentLoading(false);
+    }
+  };
 
   const clearData = () => {
     setData(null);
     setImageFile(false);
     setSelectedFile(null);
     setPreview(null);
+    setProgress(0);
+    setAdvice("");
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
 
   useEffect(() => {
@@ -381,9 +181,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!preview) return;
-    setIsloading(true);
     sendFile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preview]);
 
   const onSelectFile = (files) => {
@@ -398,118 +196,407 @@ const Home = () => {
     setImageFile(true);
   };
 
-  if (data) {
-    confidence = (parseFloat(data.confidence) * 100).toFixed(2);
-  }
+  const confidence = data ? (parseFloat(data.confidence) * 100 ): 0;
 
   return (
-    <>
-      <AppBar position="static" color="primary">
+    // <Box sx={{ minHeight: "100vh", background: `url(${bgImage}) no-repeat center/cover` }}>
+    //   <GradientAppBar position="static">
+    //     <Toolbar>
+    //       <Box sx={{ display: "flex", alignItems: "center" }}>
+    //         <Avatar src={cblogo} sx={{ mr: 2 }} />
+    //         <Typography variant="h6" noWrap sx={{ fontWeight: 700 }}>
+    //           Potato Disease Classifier
+    //         </Typography>
+    //       </Box>
+    //       <Box sx={{ flexGrow: 1 }} />
+    //       <IconButton color="inherit" sx={{ mr: 2 }}>
+    //         <HomeIcon />
+    //       </IconButton>
+    //       <IconButton color="inherit">
+    //         <Info />
+    //       </IconButton>
+    //     </Toolbar>
+    //   </GradientAppBar>
+
+    //   <Container maxWidth="lg" sx={{ py: 4 }}>
+    //     <Grid container justifyContent="center" spacing={4}>
+    //       <Grid item xs={12} md={8}>
+    //         <GlassCard>
+    //           {imageFile ? (
+    //             <CardActionArea>
+    //               <CardMedia
+    //                 component="img"
+    //                 height="400"
+    //                 image={preview}
+    //                 alt="Potato Leaf"
+    //                 sx={{ objectFit: "contain", p: 2 }}
+    //               />
+    //             </CardActionArea>
+    //           ) : (
+    //             <CardContent sx={{ p: 4 }}>
+    //               <DropzoneArea
+    //                 acceptedFiles={["image/*"]}
+    //                 dropzoneText={
+    //                   <Box sx={{ textAlign: "center", p: 2 }}>
+    //                     <CloudUpload fontSize="large" sx={{ fontSize: 48, mb: 2, color: "text.secondary" }} />
+    //                     <Typography variant="h5" component="div" gutterBottom>
+    //                       Drag & Drop Potato Leaf Image
+    //                     </Typography>
+    //                     <Typography variant="body2" component="div" color="text.secondary">
+    //                       or click to browse files
+    //                     </Typography>
+    //                   </Box>
+    //                 }
+    //                 onChange={onSelectFile}
+    //                 filesLimit={1}
+    //                 showPreviewsInDropzone={false}
+    //                 showAlerts={false}
+    //                 dropzoneClass="dropzone"
+    //                 dropzoneParagraphClass="dropzone-text"
+    //                 Icon={CloudUpload}
+    //                 maxFileSize={5000000}
+    //                 sx={{
+    //                   border: "2px dashed",
+    //                   borderColor: "primary.main",
+    //                   borderRadius: "20px",
+    //                   "&:hover": {
+    //                     borderColor: "primary.dark",
+    //                   },
+    //                 }}
+    //               />
+    //             </CardContent>
+    //           )}
+
+    //           {isLoading && (
+    //             <Box sx={{ p: 4, textAlign: "center" }}>
+    //               <CircularProgress size={60} thickness={4} sx={{ mb: 2 }} />
+    //               <Typography variant="h6" gutterBottom>
+    //                 Analyzing Image
+    //               </Typography>
+    //               <LinearProgress 
+    //                 variant="determinate" 
+    //                 value={progress} 
+    //                 sx={{ height: 10, borderRadius: 5, mb: 2 }}
+    //               />
+    //               <Typography variant="body2" color="text.secondary">
+    //                 {progress < 100 ? "Processing..." : "Finalizing results..."}
+    //               </Typography>
+    //             </Box>
+    //           )}
+
+    //           {data && (
+    //             <CardContent sx={{ p: 4 }}>
+    //               <Box sx={{ mb: 4 }}>
+    //                 <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+    //                   Analysis Results
+    //                 </Typography>
+    //                 <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+    //                   Our AI has analyzed your potato leaf image:
+    //                 </Typography>
+    //               </Box>
+
+    //               <TableContainer component={Paper} sx={{ mb: 3, borderRadius: "12px", overflow: "hidden" }}>
+    //                 <Table>
+    //                   <TableHead sx={{ bgcolor: "action.hover" }}>
+    //                     <TableRow>
+    //                       <TableCell sx={{ fontWeight: 700 }}>Attribute</TableCell>
+    //                       <TableCell align="right" sx={{ fontWeight: 700 }}>Value</TableCell>
+    //                     </TableRow>
+    //                   </TableHead>
+    //                   <TableBody>
+    //                     <TableRow>
+    //                       <TableCell>Disease Detected</TableCell>
+    //                       <TableCell align="right">
+    //                         <Chip 
+    //                           label={data.class} 
+    //                           color={
+    //                             data.class.includes("healthy") ? "success" : 
+    //                             data.class.includes("Early") ? "warning" : "error"
+    //                           }
+    //                         />
+    //                       </TableCell>
+    //                     </TableRow>
+    //                     <TableRow>
+    //                       <TableCell>Confidence Level</TableCell>
+    //                       <TableCell align="right">
+    //                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+    //                           <Box sx={{ width: "100%", mr: 1 }}>
+    //                             <LinearProgress 
+    //                               variant="determinate" 
+    //                               value={confidence} 
+    //                               color={
+    //                                 confidence > 80 ? "success" : 
+    //                                 confidence > 60 ? "warning" : "error"
+    //                               }
+    //                               sx={{ height: 10, borderRadius: 5 }}
+    //                             />
+    //                           </Box>
+    //                           <Typography variant="body2" color="text.secondary">
+    //                             {confidence.toFixed(2)}%
+    //                           </Typography>
+    //                         </Box>
+    //                       </TableCell>
+    //                     </TableRow>
+    //                   </TableBody>
+    //                 </Table>
+    //               </TableContainer>
+
+    //               <Box sx={{ mt: 3, textAlign: "center" }}>
+    //                 <SecondaryButton
+    //                   variant="contained"
+    //                   size="large"
+    //                   onClick={clearData}
+    //                   startIcon={<Clear />}
+    //                   sx={{ mr: 2 }}
+    //                 >
+    //                   Clear
+    //                 </SecondaryButton>
+    //                 <PrimaryButton onClick={handleTreatment} disabled={!result} variant="contained" size="large">
+    //                   Get Treatment Advice
+    //                 </PrimaryButton>
+    //               </Box>
+    //             </CardContent>
+    //           )}
+    //         </GlassCard>
+    //       </Grid>
+
+    //       {!imageFile && (
+    //         <Grid item xs={12} md={4}>
+    //           <GlassCard sx={{ p: 3 }}>
+    //             <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+    //               How It Works
+    //             </Typography>
+    //             <Typography variant="body1" paragraph>
+    //               Upload a clear image of a potato plant leaf, and our AI will analyze it for common diseases like:
+    //             </Typography>
+    //             <Box component="ul" sx={{ pl: 3, mb: 3 }}>
+    //               <li><Typography variant="body1">Early Blight</Typography></li>
+    //               <li><Typography variant="body1">Late Blight</Typography></li>
+    //               <li><Typography variant="body1">Healthy leaves</Typography></li>
+    //             </Box>
+    //             <Typography variant="body2" color="text.secondary">
+    //               For best results, use images with good lighting and focus on a single leaf.
+    //             </Typography>
+    //           </GlassCard>
+    //         </Grid>
+    //       )}
+    //     </Grid>
+    //   </Container>
+    // </Box>
+    <Box sx={{ minHeight: "100vh", background: `url(${bgImage}) no-repeat center/cover` }}>
+      <GradientAppBar position="static">
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            CodeBasics: Potato Disease Classification
-          </Typography>
-          <div style={{ flexGrow: 1 }} />
-          <Avatar src={cblogo} />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Avatar src={cblogo} sx={{ mr: 2 }} />
+            <Typography variant="h6" noWrap sx={{ fontWeight: 700 }}>
+              Potato Disease Classifier
+            </Typography>
+          </Box>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton color="inherit" sx={{ mr: 2 }}>
+            <HomeIcon />
+          </IconButton>
+          <IconButton color="inherit">
+            <Info />
+          </IconButton>
         </Toolbar>
-      </AppBar>
+      </GradientAppBar>
 
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{
-          backgroundImage: `url(${image})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          height: "93vh",
-          mt: "8px",
-        }}
-      >
-        <Grid container justifyContent="center" alignItems="center" spacing={2} sx={{ p: "4em 1em 0 1em" }}>
-          <Grid item xs={12}>
-            <Card
-              sx={{
-                margin: "auto",
-                maxWidth: 400,
-                height: imageFile ? 500 : "auto",
-                backgroundColor: "transparent",
-                boxShadow: "0px 9px 70px 0px rgb(0 0 0 / 30%)",
-                borderRadius: "15px",
-              }}
-            >
-              {imageFile && (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Grid container justifyContent="center" spacing={4}>
+          <Grid item xs={12} md={8}>
+            <GlassCard>
+              {imageFile ? (
                 <CardActionArea>
-                  <CardMedia component="img" height="400" image={preview} alt="Potato Leaf" />
+                  <CardMedia
+                    component="img"
+                    height="400"
+                    image={preview}
+                    alt="Potato Leaf"
+                    sx={{ objectFit: "contain", p: 2 }}
+                  />
                 </CardActionArea>
-              )}
-
-              {!imageFile && (
-                <CardContent>
+              ) : (
+                <CardContent sx={{ p: 4 }}>
                   <DropzoneArea
                     acceptedFiles={["image/*"]}
-                    dropzoneText={"Drag and drop an image of a potato plant leaf to process"}
+                    dropzoneText={
+                      <Box sx={{ textAlign: "center", p: 2 }}>
+                        <CloudUpload fontSize="large" sx={{ fontSize: 48, mb: 2, color: "text.secondary" }} />
+                        <Typography variant="h5" component="div" gutterBottom>
+                          Drag & Drop Potato Leaf Image
+                        </Typography>
+                        <Typography variant="body2" component="div" color="text.secondary">
+                          or click to browse files
+                        </Typography>
+                      </Box>
+                    }
                     onChange={onSelectFile}
+                    filesLimit={1}
+                    showPreviewsInDropzone={false}
+                    showAlerts={false}
+                    dropzoneClass="dropzone"
+                    dropzoneParagraphClass="dropzone-text"
+                    Icon={CloudUpload}
+                    maxFileSize={5000000}
+                    sx={{
+                      border: "2px dashed",
+                      borderColor: "primary.main",
+                      borderRadius: "20px",
+                      "&:hover": {
+                        borderColor: "primary.dark",
+                      },
+                    }}
                   />
                 </CardContent>
               )}
 
+              {isLoading && (
+                <Box sx={{ p: 4, textAlign: "center" }}>
+                  <CircularProgress size={60} thickness={4} sx={{ mb: 2 }} />
+                  <Typography variant="h6" gutterBottom>
+                    Analyzing Image
+                  </Typography>
+                  <LinearProgress 
+                    variant="determinate" 
+                    value={progress} 
+                    sx={{ height: 10, borderRadius: 5, mb: 2 }}
+                  />
+                  <Typography variant="body2" color="text.secondary">
+                    {progress < 100 ? "Processing..." : "Finalizing results..."}
+                  </Typography>
+                </Box>
+              )}
+
               {data && (
-                <CardContent sx={{ backgroundColor: "white", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <TableContainer component={Paper} sx={{ backgroundColor: "transparent", boxShadow: "none" }}>
-                    <Table size="small">
-                      <TableHead>
+                <CardContent sx={{ p: 4 }}>
+                  <Box sx={{ mb: 4 }}>
+                    <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+                      Analysis Results
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                      Our AI has analyzed your potato leaf image:
+                    </Typography>
+                  </Box>
+
+                  <TableContainer component={Paper} sx={{ mb: 3, borderRadius: "12px", overflow: "hidden" }}>
+                    <Table>
+                      <TableHead sx={{ bgcolor: "action.hover" }}>
                         <TableRow>
-                          <TableCell sx={{ fontSize: "14px", fontWeight: "bold" }}>Label:</TableCell>
-                          <TableCell align="right" sx={{ fontSize: "14px", fontWeight: "bold" }}>
-                            Confidence:
-                          </TableCell>
+                          <TableCell sx={{ fontWeight: 700 }}>Attribute</TableCell>
+                          <TableCell align="right" sx={{ fontWeight: 700 }}>Value</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         <TableRow>
-                          <TableCell sx={{ fontSize: "22px", fontWeight: "bold", color: "text.primary" }}>
-                            {data.class}
+                          <TableCell>Disease Detected</TableCell>
+                          <TableCell align="right">
+                            <Chip 
+                              label={data.class} 
+                              color={
+                                data.class.includes("healthy") ? "success" : 
+                                data.class.includes("Early") ? "warning" : "error"
+                              }
+                            />
                           </TableCell>
-                          <TableCell align="right" sx={{ fontSize: "22px", fontWeight: "bold", color: "text.primary" }}>
-                            {confidence}%
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Confidence Level</TableCell>
+                          <TableCell align="right">
+                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                              <Box sx={{ width: "100%", mr: 1 }}>
+                                <LinearProgress 
+                                  variant="determinate" 
+                                  value={confidence} 
+                                  color={
+                                    confidence > 80 ? "success" : 
+                                    confidence > 60 ? "warning" : "error"
+                                  }
+                                  sx={{ height: 10, borderRadius: 5 }}
+                                />
+                              </Box>
+                              <Typography variant="body2" color="text.secondary">
+                                {confidence}%
+                              </Typography>
+                            </Box>
                           </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
                   </TableContainer>
-                </CardContent>
-              )}
 
-              {isLoading && (
-                <CardContent sx={{ backgroundColor: "white", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <CircularProgress color="primary" />
-                  <Typography variant="h6" noWrap>
-                    Processing
-                  </Typography>
+                  <Box sx={{ mt: 3, textAlign: "center" }}>
+                    <SecondaryButton
+                      variant="contained"
+                      size="large"
+                      onClick={clearData}
+                      startIcon={<Clear />}
+                      sx={{ mr: 2 }}
+                    >
+                      Clear
+                    </SecondaryButton>
+                    <PrimaryButton 
+                      onClick={handleTreatment} 
+                      variant="contained" 
+                      size="large"
+                      startIcon={<LocalHospital />}
+                    >
+                      Get Treatment Advice
+                    </PrimaryButton>
+                  </Box>
                 </CardContent>
               )}
-            </Card>
+            </GlassCard>
           </Grid>
 
-          {data && (
-            <Grid item sx={{ maxWidth: "416px", width: "100%" }}>
-              <ColorButton
-                variant="contained"
-                fullWidth
-                size="large"
-                onClick={clearData}
-                startIcon={<Clear fontSize="large" />}
-              >
-                Clear
-              </ColorButton>
+          {!imageFile && (
+            <Grid item xs={12} md={4}>
+              <GlassCard sx={{ p: 3 }}>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+                  How It Works
+                </Typography>
+                <Typography variant="body1" paragraph>
+                  Upload a clear image of a potato plant leaf, and our AI will analyze it for common diseases like:
+                </Typography>
+                <Box component="ul" sx={{ pl: 3, mb: 3 }}>
+                  <li><Typography variant="body1">Early Blight</Typography></li>
+                  <li><Typography variant="body1">Late Blight</Typography></li>
+                  <li><Typography variant="body1">Healthy leaves</Typography></li>
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  For best results, use images with good lighting and focus on a single leaf.
+                </Typography>
+              </GlassCard>
             </Grid>
           )}
         </Grid>
       </Container>
-    </>
+
+      {/* Treatment Advice Dialog */}
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <LocalHospital sx={{ mr: 1, color: "primary.main" }} />
+            Treatment Advice for {data?.class}
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {treatmentLoading ? (
+            <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Typography sx={{ mt: 2, whiteSpace: "pre-line" }}>
+              {advice}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 
 export default Home;
-

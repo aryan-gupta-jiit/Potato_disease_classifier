@@ -6,6 +6,7 @@ import io
 import os
 import tensorflow as tf
 from fastapi.middleware.cors import CORSMiddleware
+import google.generativeai as genai
 
 app= FastAPI()
 
@@ -23,6 +24,8 @@ MODEL_PATH = os.path.join(BASE_DIR, "models", "potatoes.keras")
 
 MODEL = tf.keras.models.load_model(MODEL_PATH)
 CLASS_NAMES=["Early Blight", "Late Blight", "Healthy"]
+
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def read_file_as_image(data)->np.ndarray:
     image=np.array(Image.open(io.BytesIO(data)))
@@ -47,6 +50,16 @@ async def predict(
         "class": predicted_class,
         "confidence": float(confidence),
     }
+
+@app.post("treatment")
+async def treatment(data:dict):
+    disease=data.get("disease","unknown")
+    if disease == "unknown":
+        return {"advice": "Your plant is healthy. No treatment needed ✅"}
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    prompt = f"Give a farmer-friendly treatment advice for potato disease: {disease}. Keep it short and practical."
+    response = model.generate_content(prompt)
+    return {"advice": response.text}
 
 if __name__ == "__main__":
     uvicorn.run(app,host="192.168.1.38",port=8080)
