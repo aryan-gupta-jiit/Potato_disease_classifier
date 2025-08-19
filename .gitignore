@@ -17,3 +17,8 @@ Thumbs.db
 saved_models/
 
 api/main-tf-serving.py
+api/.env
+*env
+
+.env
+*/.env
