@@ -419,7 +419,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { Clear, CloudUpload, Info, Home as HomeIcon,LocalHospital } from "@mui/icons-material";
 import { DropzoneArea } from "mui-file-dropzone";
-import cblogo from "./cblogo.PNG";
+import cblogo from "./cblogo.png";
 import bgImage from "./bg.png";
 import axios from "axios";
 
